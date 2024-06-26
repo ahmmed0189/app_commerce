@@ -189,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 // google + facebook
                 const SizedBox(height: 2),
-                //Google , Facebook
+
                 Padding(
                   padding: const EdgeInsets.all(30.0),
                   child: Row(

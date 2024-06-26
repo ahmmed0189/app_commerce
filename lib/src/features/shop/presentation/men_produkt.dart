@@ -31,7 +31,6 @@ class _MenProductState extends State<MenProduct> {
   late Future<List<Product>> products;
   @override
   void initState() {
-    // TODO: implement initState
     products = widget.repo.getProducts();
     super.initState();
   }
