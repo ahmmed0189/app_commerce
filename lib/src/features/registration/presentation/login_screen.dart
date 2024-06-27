@@ -10,10 +10,10 @@ class LoginScreen extends StatefulWidget {
   final DatabaseRepository repo;
   final AuthRepository authRepository;
 
-  LoginScreen({
+  const LoginScreen({
     required this.repo,
-    super.key,
     required this.authRepository,
+    super.key,
   });
 
   @override
@@ -50,13 +50,10 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               children: [
                 const SizedBox(height: 30),
-                // logo
                 const Image(
                   image: AssetImage('assets/images/logo.png'),
                 ),
                 const SizedBox(height: 50),
-
-                //provisionTec
                 Text(
                   'ProvisionTec Shop',
                   style: GoogleFonts.bebasNeue(
@@ -65,12 +62,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 25),
-
                 Form(
                   key: _formKey,
                   child: Column(
                     children: [
-                      //email textfield
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 25.0),
                         child: TextFormField(
@@ -89,10 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                         ),
                       ),
-
                       const SizedBox(height: 20),
-
-                      //pw textfield
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 25.0),
                         child: TextFormField(
@@ -113,8 +105,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       const SizedBox(height: 10),
-
-                      //forget pw
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 25.0),
                         child: Row(
@@ -127,25 +117,32 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         ),
                       ),
-
-                      //sign in button
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            // Perform login action
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Processing Data')),
-                            );
-                            // Navigiere zur ShopPage
-
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
+                            try {
+                              await widget.authRepository
+                                  .signUpWithEmailAndPassword(
+                                      _emailController.text,
+                                      _pwController.text);
+                              // Navigate to ShopPage on successful login
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
                                   builder: (context) => ShopPage(
-                                        repo: widget.repo,
-                                        authRepository: widget.authRepository,
-                                      )),
-                            );
+                                    repo: widget.repo,
+                                    authRepository: widget.authRepository,
+                                  ),
+                                ),
+                              );
+                            } catch (e) {
+                              // Handle login error
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Login failed: $e'),
+                                ),
+                              );
+                            }
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -163,13 +160,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
-
                       const SizedBox(height: 30),
                     ],
                   ),
                 ),
-
-                // or continue with
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 25.0),
                   child: Row(
@@ -193,21 +187,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ),
-
-                // google + facebook
                 const SizedBox(height: 2),
-
                 Padding(
                   padding: const EdgeInsets.all(30.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // Google
                       Image.asset(
                         'assets/images/icons_google.png',
                         height: 72,
                       ),
-                      // Facebook
                       const SizedBox(width: 10),
                       Image.asset(
                         'assets/images/logos_facebook.png',
@@ -216,7 +205,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ),
-                //not a member? register now
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
