@@ -1,4 +1,5 @@
 import 'package:app_commerce/src/common/my_button.dart';
+import 'package:app_commerce/src/data/auth_repository.dart';
 import 'package:app_commerce/src/data/database_repository.dart';
 import 'package:app_commerce/src/features/shop/presentation/shop_page.dart';
 
@@ -8,8 +9,9 @@ import 'package:google_fonts/google_fonts.dart';
 class WelcomeToTec extends StatelessWidget {
   // Attribute
   final DatabaseRepository repo;
+  final AuthRepository authRepository;
   // Konstruktor
-  WelcomeToTec({required this.repo, super.key});
+  WelcomeToTec({required this.repo, super.key, required this.authRepository});
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +55,7 @@ class WelcomeToTec extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (context) => ShopPage(
                                   repo: repo,
+                                  authRepository: authRepository,
                                 )),
                       );
                     },

@@ -1,22 +1,26 @@
+import 'package:app_commerce/src/data/auth_repository.dart';
 import 'package:app_commerce/src/data/database_repository.dart';
+import 'package:app_commerce/src/features/authentification/application/validators.dart';
 import 'package:app_commerce/src/features/registration/presentation/confirm_emailscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SignupScreen extends StatefulWidget {
   final DatabaseRepository repo;
-  SignupScreen({required this.repo, super.key});
+  final AuthRepository authRepository;
+  SignupScreen({required this.repo, super.key, required this.authRepository});
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  bool showPassword = false;
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _fullNameController;
   late TextEditingController _emailController;
   late TextEditingController _phoneController;
-  late TextEditingController _passwordController;
+  late TextEditingController _pwController;
   late TextEditingController _confirmPasswordController;
 
   @override
@@ -25,7 +29,7 @@ class _SignupScreenState extends State<SignupScreen> {
     _fullNameController = TextEditingController();
     _emailController = TextEditingController();
     _phoneController = TextEditingController();
-    _passwordController = TextEditingController();
+    _pwController = TextEditingController();
     _confirmPasswordController = TextEditingController();
   }
 
@@ -34,7 +38,7 @@ class _SignupScreenState extends State<SignupScreen> {
     _fullNameController.dispose();
     _emailController.dispose();
     _phoneController.dispose();
-    _passwordController.dispose();
+    _pwController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
   }
@@ -81,7 +85,6 @@ class _SignupScreenState extends State<SignupScreen> {
                             labelText: "Full Name",
                             labelStyle: TextStyle(color: Colors.white),
                           ),
-                          validator: _validateFullName,
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -99,7 +102,8 @@ class _SignupScreenState extends State<SignupScreen> {
                             labelText: "Email",
                             labelStyle: TextStyle(color: Colors.white),
                           ),
-                          validator: _validateEmail,
+                          validator: validateEmail,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -117,14 +121,13 @@ class _SignupScreenState extends State<SignupScreen> {
                             labelText: "Phone Number",
                             labelStyle: TextStyle(color: Colors.white),
                           ),
-                          validator: _validatePhoneNumber,
                         ),
                       ),
                       const SizedBox(height: 20),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 25.0),
                         child: TextFormField(
-                          controller: _passwordController,
+                          controller: _pwController,
                           obscureText: true,
                           style: const TextStyle(color: Colors.white54),
                           decoration: const InputDecoration(
@@ -136,7 +139,8 @@ class _SignupScreenState extends State<SignupScreen> {
                             labelText: "Password",
                             labelStyle: TextStyle(color: Colors.white),
                           ),
-                          validator: _validatePassword,
+                          validator: validatePw,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -155,7 +159,12 @@ class _SignupScreenState extends State<SignupScreen> {
                             labelText: "Confirm Password",
                             labelStyle: TextStyle(color: Colors.white),
                           ),
-                          validator: _validateConfirmPassword,
+                          validator: (value) {
+                            return validateRepeatPw(_pwController.text, value)
+                                ? null
+                                : "Passwörter müssen identisch sein";
+                          },
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -170,6 +179,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               MaterialPageRoute(
                                 builder: (context) => ConfirmEmailScreen(
                                   repo: widget.repo,
+                                  authRepository: widget.authRepository,
                                 ),
                               ),
                             );
@@ -242,51 +252,5 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       ),
     );
-  }
-
-  String? _validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your email';
-    }
-    const emailRegex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
-    if (!RegExp(emailRegex).hasMatch(value)) {
-      return 'Please enter a valid email address';
-    }
-    return null;
-  }
-
-  String? _validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your password';
-    }
-    if (value.length < 8) {
-      return 'Password must be at least 8 characters long';
-    }
-    return null;
-  }
-
-  String? _validateFullName(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your full name';
-    }
-    return null;
-  }
-
-  String? _validatePhoneNumber(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your phone number';
-    }
-    const phoneRegex = r'^\+?[0-9]{7,15}$';
-    if (!RegExp(phoneRegex).hasMatch(value)) {
-      return 'Please enter a valid phone number';
-    }
-    return null;
-  }
-
-  String? _validateConfirmPassword(String? value) {
-    if (value != _passwordController.text) {
-      return 'Passwords do not match';
-    }
-    return null;
   }
 }

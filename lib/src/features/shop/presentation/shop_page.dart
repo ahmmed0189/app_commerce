@@ -1,3 +1,4 @@
+import 'package:app_commerce/src/data/auth_repository.dart';
 import 'package:app_commerce/src/data/database_repository.dart';
 import 'package:app_commerce/src/features/shop/presentation/women_product.dart';
 import 'package:app_commerce/src/features/shop/presentation/drawe_bar.dart';
@@ -10,10 +11,12 @@ class ShopPage extends StatelessWidget {
   // Attribute
   final List<String> tabs = ["All categories", "Men", "Women", "Kind"];
   final DatabaseRepository repo;
+  final AuthRepository authRepository;
   // Konstruktor
   ShopPage({
     required this.repo,
     super.key,
+    required this.authRepository,
   });
 
   // Methoden
@@ -54,6 +57,7 @@ class ShopPage extends StatelessWidget {
         ),
         drawer: DrawerBar(
           repo: repo,
+          authRepository: authRepository,
         ),
         body: SingleChildScrollView(
           child: Column(children: [

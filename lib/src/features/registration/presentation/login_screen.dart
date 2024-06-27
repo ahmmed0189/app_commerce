@@ -1,4 +1,6 @@
+import 'package:app_commerce/src/data/auth_repository.dart';
 import 'package:app_commerce/src/data/database_repository.dart';
+import 'package:app_commerce/src/features/authentification/application/validators.dart';
 import 'package:app_commerce/src/features/registration/presentation/sign_up.dart';
 import 'package:app_commerce/src/features/shop/presentation/shop_page.dart';
 import 'package:flutter/material.dart';
@@ -6,10 +8,12 @@ import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
   final DatabaseRepository repo;
+  final AuthRepository authRepository;
 
   LoginScreen({
     required this.repo,
     super.key,
+    required this.authRepository,
   });
 
   @override
@@ -82,6 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             labelStyle: TextStyle(color: Colors.white),
                           ),
                           validator: validateEmail,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                         ),
                       ),
 
@@ -103,7 +108,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             labelText: "Password",
                             labelStyle: TextStyle(color: Colors.white),
                           ),
-                          validator: validatePassword,
+                          validator: validatePw,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -137,6 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               MaterialPageRoute(
                                   builder: (context) => ShopPage(
                                         repo: widget.repo,
+                                        authRepository: widget.authRepository,
                                       )),
                             );
                           }
@@ -230,8 +237,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                SignupScreen(repo: widget.repo),
+                            builder: (context) => SignupScreen(
+                              repo: widget.repo,
+                              authRepository: widget.authRepository,
+                            ),
                           ),
                         );
                       },
@@ -245,26 +254,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-}
-
-String? validateEmail(String? input) {
-  if (input == null || input.isEmpty) {
-    return 'Bitte eine Email eingeben';
-  }
-  // Check if the email format is valid
-  const emailRegex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
-  if (!RegExp(emailRegex).hasMatch(input)) {
-    return 'gültige Email-Adresse eingeben';
-  }
-  return null;
-}
-
-String? validatePassword(String? input) {
-  if (input == null || input.isEmpty) {
-    return 'Passwort eingeben';
-  }
-  if (input.length < 8) {
-    return 'Das Passwort muss mindestens 8 Zeichen lang sein';
-  }
-  return null;
 }

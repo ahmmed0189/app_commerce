@@ -1,3 +1,4 @@
+import 'package:app_commerce/src/data/auth_repository.dart';
 import 'package:app_commerce/src/data/database_repository.dart';
 import 'package:app_commerce/src/features/registration/presentation/succ_emailscreen.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +7,10 @@ import 'package:google_fonts/google_fonts.dart';
 class ConfirmEmailScreen extends StatelessWidget {
   // Attribute
   final DatabaseRepository repo;
+  final AuthRepository authRepository;
   // Konstruktor
-  ConfirmEmailScreen({required this.repo, super.key});
+  ConfirmEmailScreen(
+      {required this.repo, super.key, required this.authRepository});
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +78,7 @@ class ConfirmEmailScreen extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (context) => SuccEmailScreen(
                                   repo: repo,
+                                  authRepository: authRepository,
                                 )),
                       );
                     },

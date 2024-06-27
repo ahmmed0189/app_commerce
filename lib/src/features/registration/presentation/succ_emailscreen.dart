@@ -1,3 +1,4 @@
+import 'package:app_commerce/src/data/auth_repository.dart';
 import 'package:app_commerce/src/data/database_repository.dart';
 import 'package:app_commerce/src/features/registration/presentation/welcome.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +7,10 @@ import 'package:google_fonts/google_fonts.dart';
 class SuccEmailScreen extends StatelessWidget {
   // Attribute
   final DatabaseRepository repo;
+  final AuthRepository authRepository;
   // Konstruktor
-  SuccEmailScreen({required this.repo, super.key});
+  SuccEmailScreen(
+      {required this.repo, super.key, required this.authRepository});
 
   // Methoden
   @override
@@ -72,6 +75,7 @@ class SuccEmailScreen extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (context) => WelcomeToTec(
                                   repo: repo,
+                                  authRepository: authRepository,
                                 )),
                       );
                     },
