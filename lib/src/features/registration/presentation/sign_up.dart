@@ -169,11 +169,14 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Processing Data')),
                             );
+                            await widget.authRepository
+                                .signUpWithEmailAndPassword(
+                                    _emailController.text, _pwController.text);
                             Navigator.push(
                               context,
                               MaterialPageRoute(

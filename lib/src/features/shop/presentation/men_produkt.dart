@@ -1,3 +1,4 @@
+import 'package:app_commerce/src/data/auth_repository.dart';
 import 'package:app_commerce/src/data/database_repository.dart';
 import 'package:app_commerce/src/features/cart/presentation/produkt_tile.dart';
 import 'package:app_commerce/src/features/overview/domain/product.dart';
@@ -6,7 +7,8 @@ import 'package:flutter/material.dart';
 
 class MenProduct extends StatefulWidget {
   final DatabaseRepository repo;
-  MenProduct({required this.repo, super.key});
+  MenProduct(
+      {required this.repo, super.key, required AuthRepository authRepository});
 
   @override
   _MenProductState createState() => _MenProductState();

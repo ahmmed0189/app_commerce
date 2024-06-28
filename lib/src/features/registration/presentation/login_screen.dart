@@ -126,15 +126,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                       _emailController.text,
                                       _pwController.text);
                               // Navigate to ShopPage on successful login
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ShopPage(
-                                    repo: widget.repo,
-                                    authRepository: widget.authRepository,
-                                  ),
-                                ),
-                              );
+                              // Navigator.pushReplacement(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => ShopPage(
+                              //       repo: widget.repo,
+                              //       authRepository: widget.authRepository,
+                              //     ),
+                              //   ),
+                              // );
                             } catch (e) {
                               // Handle login error
                               ScaffoldMessenger.of(context).showSnackBar(

@@ -16,6 +16,7 @@ void main() async {
     App(
       repo: databaseRepository,
       authRepository: authRepository,
+      databaseRepository: databaseRepository,
     ),
   );
 }
