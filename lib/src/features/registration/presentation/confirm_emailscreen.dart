@@ -6,11 +6,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ConfirmEmailScreen extends StatelessWidget {
   // Attribute
-  final DatabaseRepository repo;
+  final DatabaseRepository databaseRepository;
   final AuthRepository authRepository;
   // Konstruktor
   ConfirmEmailScreen(
-      {required this.repo, super.key, required this.authRepository});
+      {required this.databaseRepository,
+      super.key,
+      required this.authRepository});
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +79,7 @@ class ConfirmEmailScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => SuccEmailScreen(
-                                  repo: repo,
+                                  databaseRepository: databaseRepository,
                                   authRepository: authRepository,
                                 )),
                       );

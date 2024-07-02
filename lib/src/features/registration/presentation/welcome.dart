@@ -8,10 +8,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 class WelcomeToTec extends StatelessWidget {
   // Attribute
-  final DatabaseRepository repo;
+  final DatabaseRepository databaseRepository;
   final AuthRepository authRepository;
   // Konstruktor
-  WelcomeToTec({required this.repo, super.key, required this.authRepository});
+  WelcomeToTec(
+      {required this.databaseRepository,
+      super.key,
+      required this.authRepository});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +57,7 @@ class WelcomeToTec extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => ShopPage(
-                                  repo: repo,
+                                  databaseRepository: databaseRepository,
                                   authRepository: authRepository,
                                 )),
                       );

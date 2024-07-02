@@ -6,7 +6,7 @@ class WomenProduct extends StatelessWidget {
   const WomenProduct(
       {super.key,
       required AuthRepository authRepository,
-      required DatabaseRepository repo});
+      required DatabaseRepository databaseRepository});
 
   @override
   Widget build(BuildContext context) {

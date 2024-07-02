@@ -7,13 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
-  final DatabaseRepository repo;
+  final DatabaseRepository databaseRepository;
   final AuthRepository authRepository;
 
   const LoginScreen({
-    required this.repo,
     required this.authRepository,
     super.key,
+    required this.databaseRepository,
   });
 
   @override
@@ -122,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (_formKey.currentState!.validate()) {
                             try {
                               await widget.authRepository
-                                  .signUpWithEmailAndPassword(
+                                  .loginWithEmailAndPassword(
                                       _emailController.text,
                                       _pwController.text);
                               // Navigate to ShopPage on successful login
@@ -130,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               //   context,
                               //   MaterialPageRoute(
                               //     builder: (context) => ShopPage(
-                              //       repo: widget.repo,
+                              //       databaseRepository: widget.databaseRepository,
                               //       authRepository: widget.authRepository,
                               //     ),
                               //   ),
@@ -226,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => SignupScreen(
-                              repo: widget.repo,
+                              databaseRepository: widget.databaseRepository,
                               authRepository: widget.authRepository,
                             ),
                           ),

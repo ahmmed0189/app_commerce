@@ -5,9 +5,9 @@ import 'package:app_commerce/src/features/overview/domain/product.dart';
 import 'package:flutter/material.dart';
 
 class CartPage extends StatefulWidget {
-  final DatabaseRepository repo;
+  final DatabaseRepository databaseRepository;
 
-  CartPage({required this.repo, super.key});
+  CartPage({required this.databaseRepository, super.key});
 
   @override
   State<CartPage> createState() => _CartPageState();
@@ -27,7 +27,7 @@ class _CartPageState extends State<CartPage> {
           TextButton(
             onPressed: () {
               setState(() {
-                widget.repo.removeFromCart(product);
+                widget.databaseRepository.removeFromCart(product);
                 Navigator.pop(context);
               });
             },
@@ -41,7 +41,7 @@ class _CartPageState extends State<CartPage> {
   late List<Product> cart;
   @override
   void initState() {
-    cart = widget.repo.cart;
+    cart = widget.databaseRepository.cart;
     super.initState();
   }
 

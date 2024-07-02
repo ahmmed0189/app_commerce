@@ -12,7 +12,6 @@ class App extends StatelessWidget {
     super.key,
     required this.databaseRepository,
     required this.authRepository,
-    required DatabaseRepository repo,
   });
 
   @override
@@ -26,16 +25,15 @@ class App extends StatelessWidget {
         final user = snapshot.data;
         return MaterialApp(
           key: user == null ? loginKey : shopKey,
-          theme: ThemeData.light(),
-          darkTheme: ThemeData.dark(),
-          themeMode: ThemeMode.light,
+          theme: ThemeData(
+              brightness: Brightness.dark, primarySwatch: Colors.amber),
           home: user == null
               ? LoginScreen(
-                  repo: databaseRepository,
+                  databaseRepository: databaseRepository,
                   authRepository: authRepository,
                 )
               : ShopPage(
-                  repo: databaseRepository,
+                  databaseRepository: databaseRepository,
                   authRepository: authRepository,
                 ),
         );

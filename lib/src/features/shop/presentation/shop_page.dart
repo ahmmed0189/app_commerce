@@ -10,12 +10,12 @@ import 'package:google_fonts/google_fonts.dart';
 class ShopPage extends StatelessWidget {
   // Attributes
   final List<String> tabs = ["All categories", "Men", "Women", "Kids"];
-  final DatabaseRepository repo;
+  final DatabaseRepository databaseRepository;
   final AuthRepository authRepository;
 
   // Constructor
   ShopPage({
-    required this.repo,
+    required this.databaseRepository,
     super.key,
     required this.authRepository,
   });
@@ -57,7 +57,7 @@ class ShopPage extends StatelessWidget {
         ],
       ),
       drawer: DrawerBar(
-        repo: repo,
+        databaseRepository: databaseRepository,
         authRepository: authRepository,
       ),
       body: SingleChildScrollView(
@@ -111,8 +111,8 @@ class ShopPage extends StatelessWidget {
                   return GestureDetector(
                     onTap: () {
                       // Navigate to the corresponding product pages
-                      navigateToProductPage(
-                          context, tabs[index], repo, authRepository);
+                      navigateToProductPage(context, tabs[index],
+                          databaseRepository, authRepository);
                     },
                     child: Container(
                       height: 40,
@@ -145,14 +145,14 @@ class ShopPage extends StatelessWidget {
   }
 
   void navigateToProductPage(BuildContext context, String tabName,
-      DatabaseRepository repo, AuthRepository authRepository) {
+      DatabaseRepository databaseRepository, AuthRepository authRepository) {
     switch (tabName) {
       case "Men":
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => MenProduct(
-              repo: repo,
+              databaseRepository: databaseRepository,
               authRepository: authRepository,
             ),
           ),
@@ -163,7 +163,7 @@ class ShopPage extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => WomenProduct(
-              repo: repo,
+              databaseRepository: databaseRepository,
               authRepository: authRepository,
             ),
           ),

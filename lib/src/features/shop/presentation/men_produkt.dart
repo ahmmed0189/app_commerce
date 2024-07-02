@@ -6,9 +6,11 @@ import 'package:app_commerce/src/features/shop/presentation/produkt_typ.dart';
 import 'package:flutter/material.dart';
 
 class MenProduct extends StatefulWidget {
-  final DatabaseRepository repo;
+  final DatabaseRepository databaseRepository;
   MenProduct(
-      {required this.repo, super.key, required AuthRepository authRepository});
+      {required this.databaseRepository,
+      super.key,
+      required AuthRepository authRepository});
 
   @override
   _MenProductState createState() => _MenProductState();
@@ -33,7 +35,7 @@ class _MenProductState extends State<MenProduct> {
   late Future<List<Product>> products;
   @override
   void initState() {
-    products = widget.repo.getProducts();
+    products = widget.databaseRepository.getProducts();
     super.initState();
   }
 
@@ -158,7 +160,7 @@ class _MenProductState extends State<MenProduct> {
                           .map(
                             (e) => ProductTile(
                               product: e,
-                              repo: widget.repo,
+                              databaseRepository: widget.databaseRepository,
                             ),
                           )
                           .toList()),

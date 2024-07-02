@@ -6,11 +6,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 class SuccEmailScreen extends StatelessWidget {
   // Attribute
-  final DatabaseRepository repo;
+  final DatabaseRepository databaseRepository;
   final AuthRepository authRepository;
   // Konstruktor
   SuccEmailScreen(
-      {required this.repo, super.key, required this.authRepository});
+      {required this.databaseRepository,
+      super.key,
+      required this.authRepository});
 
   // Methoden
   @override
@@ -74,7 +76,7 @@ class SuccEmailScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => WelcomeToTec(
-                                  repo: repo,
+                                  databaseRepository: databaseRepository,
                                   authRepository: authRepository,
                                 )),
                       );

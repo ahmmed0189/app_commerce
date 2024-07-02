@@ -14,9 +14,8 @@ void main() async {
   AuthRepository authRepository = AuthRepository(FirebaseAuth.instance);
   runApp(
     App(
-      repo: databaseRepository,
-      authRepository: authRepository,
       databaseRepository: databaseRepository,
+      authRepository: authRepository,
     ),
   );
 }

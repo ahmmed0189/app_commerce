@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 
 class DrawerBar extends StatelessWidget {
   // Attribute
-  final DatabaseRepository repo;
+  final DatabaseRepository databaseRepository;
   final AuthRepository authRepository;
 
   // Konstruktor
   DrawerBar({
-    required this.repo,
+    required this.databaseRepository,
     super.key,
     required this.authRepository,
   });
@@ -120,7 +120,7 @@ class DrawerBar extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => LoginScreen(
-                      repo: repo,
+                      databaseRepository: databaseRepository,
                       authRepository: authRepository,
                     ),
                   ));

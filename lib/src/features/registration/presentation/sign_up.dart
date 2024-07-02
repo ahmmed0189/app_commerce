@@ -6,9 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SignupScreen extends StatefulWidget {
-  final DatabaseRepository repo;
+  final DatabaseRepository databaseRepository;
   final AuthRepository authRepository;
-  SignupScreen({required this.repo, super.key, required this.authRepository});
+  SignupScreen(
+      {required this.databaseRepository,
+      super.key,
+      required this.authRepository});
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -181,7 +184,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => ConfirmEmailScreen(
-                                  repo: widget.repo,
+                                  databaseRepository: widget.databaseRepository,
                                   authRepository: widget.authRepository,
                                 ),
                               ),

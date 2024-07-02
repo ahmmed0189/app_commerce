@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 class ProductTile extends StatefulWidget {
   final Product product;
-  final DatabaseRepository repo;
+  final DatabaseRepository databaseRepository;
 
   const ProductTile({
     super.key,
-    required this.repo,
+    required this.databaseRepository,
     required this.product,
   });
 
@@ -30,7 +30,7 @@ class _ProductTileState extends State<ProductTile> {
           TextButton(
             onPressed: () {
               setState(() {
-                widget.repo.addToCart(widget.product);
+                widget.databaseRepository.addToCart(widget.product);
                 Navigator.pop(context);
               });
             },
@@ -44,7 +44,7 @@ class _ProductTileState extends State<ProductTile> {
   late List<Product> cart;
   @override
   void initState() {
-    cart = widget.repo.cart;
+    cart = widget.databaseRepository.cart;
     super.initState();
   }
 
