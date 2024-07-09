@@ -8,13 +8,11 @@ abstract class DatabaseRepository {
   Future<void> addProduct(Product product);
 
   // Benutzerbezogene Methoden
-
   Future<User?> getUserById(int id);
   Future<void> addUser(User user);
+
+  // Warenkorb Methoden
   List<Product> get cart;
-
   void addToCart(Product item);
-
-  // remove item from cart
   void removeFromCart(Product item);
 }

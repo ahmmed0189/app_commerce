@@ -1,5 +1,6 @@
 import 'package:app_commerce/src/data/auth_repository.dart';
 import 'package:app_commerce/src/data/database_repository.dart';
+
 import 'package:app_commerce/src/features/registration/presentation/login_screen.dart';
 import 'package:app_commerce/src/features/shop/presentation/shop_page.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,6 @@ class App extends StatelessWidget {
   final AuthRepository authRepository;
 
   const App({
-    super.key,
     required this.databaseRepository,
     required this.authRepository,
   });

@@ -1,4 +1,4 @@
-import 'package:app_commerce/src/data/database_repository.dart';
+/*import 'package:app_commerce/src/data/database_repository.dart';
 import 'package:app_commerce/src/features/overview/domain/product.dart';
 import 'package:app_commerce/src/features/profile/domain/user.dart';
 
@@ -101,3 +101,4 @@ class MockDatabase implements DatabaseRepository {
     _cart.remove(item);
   }
 }
+*/

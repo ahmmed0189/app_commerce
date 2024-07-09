@@ -1,5 +1,6 @@
 import 'package:app_commerce/src/data/auth_repository.dart';
 import 'package:app_commerce/src/data/database_repository.dart';
+
 import 'package:app_commerce/src/features/registration/presentation/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,11 +9,13 @@ class SuccEmailScreen extends StatelessWidget {
   // Attribute
   final DatabaseRepository databaseRepository;
   final AuthRepository authRepository;
+
   // Konstruktor
-  SuccEmailScreen(
-      {required this.databaseRepository,
-      super.key,
-      required this.authRepository});
+  SuccEmailScreen({
+    required this.databaseRepository,
+    super.key,
+    required this.authRepository,
+  });
 
   // Methoden
   @override

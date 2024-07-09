@@ -1,5 +1,6 @@
 import 'package:app_commerce/src/data/auth_repository.dart';
 import 'package:app_commerce/src/data/database_repository.dart';
+
 import 'package:app_commerce/src/features/authentification/application/validators.dart';
 import 'package:app_commerce/src/features/registration/presentation/confirm_emailscreen.dart';
 import 'package:flutter/material.dart';
@@ -7,11 +8,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 class SignupScreen extends StatefulWidget {
   final DatabaseRepository databaseRepository;
+
   final AuthRepository authRepository;
-  SignupScreen(
-      {required this.databaseRepository,
-      super.key,
-      required this.authRepository});
+  SignupScreen({
+    required this.databaseRepository,
+    super.key,
+    required this.authRepository,
+  });
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
