@@ -1,19 +1,11 @@
-import 'package:app_commerce/src/data/auth_repository.dart';
-import 'package:app_commerce/src/data/database_repository.dart';
-
 import 'package:app_commerce/src/features/authentification/application/validators.dart';
 import 'package:app_commerce/src/features/registration/presentation/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
-  final DatabaseRepository databaseRepository;
-  final AuthRepository authRepository;
-
   const LoginScreen({
-    required this.authRepository,
     super.key,
-    required this.databaseRepository,
   });
 
   @override

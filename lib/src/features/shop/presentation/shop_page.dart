@@ -7,18 +7,15 @@ import 'package:app_commerce/src/features/shop/presentation/women_product.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ShopPage extends StatelessWidget {
   // Attributes
   final List<String> tabs = ["All categories", "Men", "Women", "Kids"];
-  final DatabaseRepository databaseRepository;
-  final AuthRepository authRepository;
 
   // Constructor
   ShopPage({
-    required this.databaseRepository,
     super.key,
-    required this.authRepository,
   });
 
   // Methods
@@ -57,10 +54,7 @@ class ShopPage extends StatelessWidget {
           ),
         ],
       ),
-      drawer: DrawerBar(
-        databaseRepository: databaseRepository,
-        authRepository: authRepository,
-      ),
+      drawer: DrawerBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -112,8 +106,7 @@ class ShopPage extends StatelessWidget {
                   return GestureDetector(
                     onTap: () {
                       // Navigate to the corresponding product pages
-                      navigateToProductPage(context, tabs[index],
-                          databaseRepository, authRepository);
+                      navigateToProductPage(context, tabs[index]);
                     },
                     child: Container(
                       height: 40,
@@ -145,17 +138,17 @@ class ShopPage extends StatelessWidget {
     );
   }
 
-  void navigateToProductPage(BuildContext context, String tabName,
-      DatabaseRepository databaseRepository, AuthRepository authRepository) {
+  void navigateToProductPage(BuildContext context, String tabName) {
+    final databaseRepository =
+        Provider.of<DatabaseRepository>(context, listen: false);
+    final authRepository = Provider.of<AuthRepository>(context, listen: false);
+
     switch (tabName) {
       case "Men":
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => MenProduct(
-              databaseRepository: databaseRepository,
-              authRepository: authRepository,
-            ),
+            builder: (context) => MenProduct(),
           ),
         );
         break;

@@ -1,18 +1,11 @@
-import 'package:app_commerce/src/data/auth_repository.dart';
-import 'package:app_commerce/src/data/database_repository.dart';
-
 import 'package:app_commerce/src/features/cart/presentation/produkt_tile.dart';
 import 'package:app_commerce/src/features/overview/domain/product.dart';
 import 'package:app_commerce/src/features/shop/presentation/produkt_typ.dart';
 import 'package:flutter/material.dart';
 
 class MenProduct extends StatefulWidget {
-  final DatabaseRepository databaseRepository;
-
   MenProduct({
-    required this.databaseRepository,
     super.key,
-    required AuthRepository authRepository,
   });
 
   @override
@@ -35,10 +28,8 @@ class _MenProductState extends State<MenProduct> {
     });
   }
 
-  late Future<List<Product>> products;
   @override
   void initState() {
-    products = widget.databaseRepository.getProducts();
     super.initState();
   }
 
@@ -143,8 +134,8 @@ class _MenProductState extends State<MenProduct> {
             ),
           ),
           const SizedBox(height: 40),
-          FutureBuilder(
-            future: products,
+          FutureBuilder<List<Product>>(
+            future: widget.databaseRepository.getProducts(),
             builder: (context, snapshot) {
               /* 
                 1. Uncompleted (Ladend)
@@ -152,10 +143,14 @@ class _MenProductState extends State<MenProduct> {
                 3. Completed with error (Fehler)
                  */
 
-              if (snapshot.hasData &&
-                  snapshot.connectionState == ConnectionState.done) {
+              print(snapshot.error);
+              print(snapshot.hasData);
+              print(snapshot.connectionState);
+              if (snapshot.hasData) {
+                print("here");
                 // FALL: Future ist komplett und hat Daten!
                 List<Product> products = snapshot.data!;
+                print("Product length: ${products.length}");
                 return Expanded(
                   child: ListView(
                       scrollDirection: Axis.horizontal,
@@ -163,12 +158,11 @@ class _MenProductState extends State<MenProduct> {
                           .map(
                             (e) => ProductTile(
                               product: e,
-                              databaseRepository: widget.databaseRepository,
                             ),
                           )
                           .toList()),
                 );
-              } else if (snapshot.connectionState != ConnectionState.done) {
+              } else if (snapshot.connectionState != ConnectionState.waiting) {
                 // FALL: Sind noch im Ladezustand
                 return const Center(child: CircularProgressIndicator());
               } else {

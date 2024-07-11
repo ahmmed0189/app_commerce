@@ -10,16 +10,24 @@ class FirestoreDatabase implements DatabaseRepository {
 
   @override
   Future<List<Product>> getProducts() async {
-    final snapshot = await _firebaseFirestore.collection('products').get();
-    return snapshot.docs.map((doc) => Product.fromMap(doc.data())).toList();
+    final snapshot = await _firebaseFirestore.collection('product').get();
+    List<Product> products = [];
+
+    if (snapshot.docs.isNotEmpty) {
+      for (DocumentSnapshot<Map<String, dynamic>> doc in snapshot.docs) {
+        if (doc.exists && doc.data() != null) {
+          products.add(Product.fromMap(doc.data()!));
+        }
+      }
+    }
+
+    return products;
   }
 
   @override
   Future<Product?> getProductById(int id) async {
-    DocumentSnapshot doc = await _firebaseFirestore
-        .collection('products')
-        .doc(id.toString())
-        .get();
+    DocumentSnapshot doc =
+        await _firebaseFirestore.collection('product').doc(id.toString()).get();
     if (doc.exists) {
       return Product.fromMap(doc.data() as Map<String, dynamic>);
     }
@@ -29,7 +37,7 @@ class FirestoreDatabase implements DatabaseRepository {
   @override
   Future<void> addProduct(Product product) async {
     await _firebaseFirestore
-        .collection('products')
+        .collection('product')
         .doc(product.id.toString())
         .set(product.toMap());
   }

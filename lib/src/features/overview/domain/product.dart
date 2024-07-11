@@ -25,12 +25,18 @@ class Product {
 
   // Create a Product object from a Map
   factory Product.fromMap(Map<String, dynamic> map) {
-    return Product(
-      id: map['id'],
-      name: map['name'],
-      price: map['price'],
-      description: map['description'],
-      imageUrl: map['imageUrl'],
-    );
+    try {
+      return Product(
+        id: map['id'],
+        name: map['name'],
+        price: map['price'].toDouble(),
+        description: map['description'],
+        imageUrl: map['imageUrl'],
+      );
+    } catch (e, s) {
+      print(e);
+      print(s);
+      throw Exception(e);
+    }
   }
 }

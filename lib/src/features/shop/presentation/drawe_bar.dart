@@ -1,20 +1,13 @@
-import 'package:app_commerce/src/data/auth_repository.dart';
-import 'package:app_commerce/src/data/database_repository.dart';
-
 import 'package:app_commerce/src/features/registration/presentation/login_screen.dart';
 
 import 'package:flutter/material.dart';
 
 class DrawerBar extends StatelessWidget {
   // Attribute
-  final DatabaseRepository databaseRepository;
-  final AuthRepository authRepository;
 
   // Konstruktor
   DrawerBar({
-    required this.databaseRepository,
     super.key,
-    required this.authRepository,
   });
 
   @override
@@ -120,10 +113,7 @@ class DrawerBar extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => LoginScreen(
-                      databaseRepository: databaseRepository,
-                      authRepository: authRepository,
-                    ),
+                    builder: (context) => LoginScreen(),
                   ));
             },
           ),
