@@ -1,6 +1,4 @@
 import 'package:app_commerce/src/common/my_button.dart';
-import 'package:app_commerce/src/data/auth_repository.dart';
-import 'package:app_commerce/src/data/database_repository.dart';
 
 import 'package:app_commerce/src/features/shop/presentation/shop_page.dart';
 
@@ -9,14 +7,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 class WelcomeToTec extends StatelessWidget {
   // Attribute
-  final DatabaseRepository databaseRepository;
-  final AuthRepository authRepository;
 
   // Konstruktor
   WelcomeToTec({
-    required this.databaseRepository,
     super.key,
-    required this.authRepository,
   });
 
   @override
@@ -58,11 +52,7 @@ class WelcomeToTec extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => ShopPage(
-                                  databaseRepository: databaseRepository,
-                                  authRepository: authRepository,
-                                )),
+                        MaterialPageRoute(builder: (context) => ShopPage()),
                       );
                     },
                     child: const Icon(

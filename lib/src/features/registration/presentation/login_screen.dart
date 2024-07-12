@@ -2,6 +2,9 @@ import 'package:app_commerce/src/features/authentification/application/validator
 import 'package:app_commerce/src/features/registration/presentation/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:app_commerce/src/data/auth_repository.dart';
+import 'package:app_commerce/src/data/database_repository.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
@@ -34,6 +37,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final authRepository = Provider.of<AuthRepository>(context);
+    Provider.of<DatabaseRepository>(context);
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(69, 29, 38, 40),
       body: SafeArea(
@@ -113,17 +119,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             try {
-                              await widget.authRepository
-                                  .loginWithEmailAndPassword(
-                                      _emailController.text,
-                                      _pwController.text);
+                              await authRepository.loginWithEmailAndPassword(
+                                  _emailController.text, _pwController.text);
                               // Navigate to ShopPage on successful login
                               // Navigator.pushReplacement(
                               //   context,
                               //   MaterialPageRoute(
                               //     builder: (context) => ShopPage(
-                              //       databaseRepository: widget.databaseRepository,
-                              //       authRepository: widget.authRepository,
+                              //       databaseRepository: databaseRepository,
+                              //       authRepository: authRepository,
                               //     ),
                               //   ),
                               // );
@@ -217,10 +221,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => SignupScreen(
-                              databaseRepository: widget.databaseRepository,
-                              authRepository: widget.authRepository,
-                            ),
+                            builder: (context) => SignupScreen(),
                           ),
                         );
                       },

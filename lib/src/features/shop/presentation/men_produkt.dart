@@ -2,11 +2,11 @@ import 'package:app_commerce/src/features/cart/presentation/produkt_tile.dart';
 import 'package:app_commerce/src/features/overview/domain/product.dart';
 import 'package:app_commerce/src/features/shop/presentation/produkt_typ.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:app_commerce/src/data/database_repository.dart';
 
 class MenProduct extends StatefulWidget {
-  MenProduct({
-    super.key,
-  });
+  MenProduct({super.key});
 
   @override
   _MenProductState createState() => _MenProductState();
@@ -35,6 +35,8 @@ class _MenProductState extends State<MenProduct> {
 
   @override
   Widget build(BuildContext context) {
+    final databaseRepository = Provider.of<DatabaseRepository>(context);
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -78,7 +80,6 @@ class _MenProductState extends State<MenProduct> {
               ),
             ),
           ),
-
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 1),
             child: Text(
@@ -92,9 +93,7 @@ class _MenProductState extends State<MenProduct> {
           const SizedBox(height: 25),
           // Search Bar
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 25.0,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: TextField(
               style: const TextStyle(color: Colors.white70),
               decoration: InputDecoration(
@@ -102,7 +101,7 @@ class _MenProductState extends State<MenProduct> {
                   Icons.search,
                   color: Colors.amber,
                 ),
-                hintText: 'Find your produkt..',
+                hintText: 'Find your product..',
                 focusedBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
                         color: Color.fromARGB(255, 202, 198, 198)),
@@ -113,10 +112,8 @@ class _MenProductState extends State<MenProduct> {
               ),
             ),
           ),
-
           const SizedBox(height: 40),
-          //horizontall listview
-          // ignore: sized_box_for_whitespace
+          // Horizontal listview
           Container(
             height: 40,
             child: ListView.builder(
@@ -135,39 +132,28 @@ class _MenProductState extends State<MenProduct> {
           ),
           const SizedBox(height: 40),
           FutureBuilder<List<Product>>(
-            future: widget.databaseRepository.getProducts(),
+            future: databaseRepository.getProducts(),
             builder: (context, snapshot) {
-              /* 
-                1. Uncompleted (Ladend)
-                2. Completed with data (Fertig)
-                3. Completed with error (Fehler)
-                 */
-
-              print(snapshot.error);
-              print(snapshot.hasData);
-              print(snapshot.connectionState);
-              if (snapshot.hasData) {
-                print("here");
-                // FALL: Future ist komplett und hat Daten!
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return const Icon(Icons.error);
+              } else if (snapshot.hasData) {
                 List<Product> products = snapshot.data!;
-                print("Product length: ${products.length}");
                 return Expanded(
                   child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: products
-                          .map(
-                            (e) => ProductTile(
-                              product: e,
-                            ),
-                          )
-                          .toList()),
+                    scrollDirection: Axis.horizontal,
+                    children: products
+                        .map(
+                          (product) => ProductTile(
+                            product: product,
+                          ),
+                        )
+                        .toList(),
+                  ),
                 );
-              } else if (snapshot.connectionState != ConnectionState.waiting) {
-                // FALL: Sind noch im Ladezustand
-                return const Center(child: CircularProgressIndicator());
               } else {
-                // FALL: Es gab nen Fehler
-                return const Icon(Icons.error);
+                return const Center(child: Text('No products available'));
               }
             },
           ),

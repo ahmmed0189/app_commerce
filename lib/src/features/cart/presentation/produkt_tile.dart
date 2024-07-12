@@ -1,14 +1,13 @@
-import 'package:app_commerce/src/data/database_repository.dart';
 import 'package:app_commerce/src/features/overview/domain/product.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:app_commerce/src/data/database_repository.dart';
 
 class ProductTile extends StatefulWidget {
   final Product product;
-  final DatabaseRepository databaseRepository;
 
   const ProductTile({
     super.key,
-    required this.databaseRepository,
     required this.product,
   });
 
@@ -30,7 +29,8 @@ class _ProductTileState extends State<ProductTile> {
           TextButton(
             onPressed: () {
               setState(() {
-                widget.databaseRepository.addToCart(widget.product);
+                Provider.of<DatabaseRepository>(context, listen: false)
+                    .addToCart(widget.product);
                 Navigator.pop(context);
               });
             },
@@ -39,13 +39,6 @@ class _ProductTileState extends State<ProductTile> {
         ],
       ),
     );
-  }
-
-  late List<Product> cart;
-  @override
-  void initState() {
-    cart = widget.databaseRepository.cart;
-    super.initState();
   }
 
   @override
@@ -79,7 +72,7 @@ class _ProductTileState extends State<ProductTile> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Row(
@@ -92,7 +85,7 @@ class _ProductTileState extends State<ProductTile> {
                     Container(
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 137, 101, 54),
+                        color: const Color.fromARGB(255, 137, 101, 54),
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: IconButton(

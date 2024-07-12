@@ -1,19 +1,14 @@
 import 'package:app_commerce/src/data/auth_repository.dart';
 import 'package:app_commerce/src/data/database_repository.dart';
-
 import 'package:app_commerce/src/features/authentification/application/validators.dart';
 import 'package:app_commerce/src/features/registration/presentation/confirm_emailscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class SignupScreen extends StatefulWidget {
-  final DatabaseRepository databaseRepository;
-
-  final AuthRepository authRepository;
-  SignupScreen({
-    required this.databaseRepository,
+  const SignupScreen({
     super.key,
-    required this.authRepository,
   });
 
   @override
@@ -51,6 +46,9 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final authRepository = Provider.of<AuthRepository>(context);
+    Provider.of<DatabaseRepository>(context);
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(69, 29, 38, 40),
       body: SafeArea(
@@ -180,16 +178,14 @@ class _SignupScreenState extends State<SignupScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Processing Data')),
                             );
-                            await widget.authRepository
-                                .signUpWithEmailAndPassword(
-                                    _emailController.text, _pwController.text);
+                            await authRepository.signUpWithEmailAndPassword(
+                              _emailController.text,
+                              _pwController.text,
+                            );
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ConfirmEmailScreen(
-                                  databaseRepository: widget.databaseRepository,
-                                  authRepository: widget.authRepository,
-                                ),
+                                builder: (context) => ConfirmEmailScreen(),
                               ),
                             );
                           }
